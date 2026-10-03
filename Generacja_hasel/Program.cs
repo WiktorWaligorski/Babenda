@@ -7,13 +7,13 @@
             string Capitals = "ABCDEFGHIJKLMNOPRSTQUVWXYZ";
             string Lowercase = Capitals.ToLower();
             string Digits = "0123456789";
-            string Diacretic = "ąęćśółżźń";
+            string Diacretic = "ąęćśłńżźó";
             Diacretic += Diacretic.ToUpper();
             string Symbols = "!@#$%^&*()";
             string[] ArrayOfStrings = {Capitals, Lowercase, Digits, Diacretic, Symbols};
             int[,] UseCounter = { { 0, 3 }, { 0, 3 }, { 0, 2 }, { 0, 2 }, { 0, 2 } };
 
-            string[] password = new string[12];
+            char[] password = new char[12];
             Random random = new Random();
 
             for (int i = 0; i < password.Length; i++)
@@ -24,21 +24,24 @@
                     int PickString = random.Next(0, ArrayOfStrings.Length);
                     if (UseCounter[PickString, 0] < UseCounter[PickString, 1])
                     {
+                        UseCounter[PickString, 0]++;
                         string UsedString = ArrayOfStrings[PickString];
                         int RollChar = random.Next(0, UsedString.Length);
-                        password[i] = UsedString[RollChar].ToString();
+                        password[i] = UsedString[RollChar];
                         NextSlot = true;
-                        Console.WriteLine(password[i]);
+                      
                     }
                 }
-
             }
 
-            return password.ToString();
+            return new string(password);
         }
         static void Main(string[] args)
         {
-            Console.WriteLine(GeneratePassword());
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine(GeneratePassword());
+            }
         }
     }
 }
